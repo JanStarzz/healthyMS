@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yzy.mapper.ProvinceMapper">
+    <resultMap id="ProvinceVO" type="com.yzy.entity.vo.ProvinceVO">
+        <result column="province_name" property="provinceName"/>
+        <result column="province_code" property="provinceCode"/>
+        <collection property="cities" ofType="com.yzy.entity.vo.CityVO">
+            <result column="city_code" property="cityCode"/>
+            <result column="city_name" property="cityName"/>
+            <collection property="areas" ofType="com.yzy.entity.vo.AreaVO">
+                <result column="area_code" property="areaCode"/>
+                <result column="area_name" property="areaName"/>
+                <result column="status" property="status"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="getVOByStatus" resultMap="ProvinceVO">
+        select
+               p.name as province_name,
+               p.code as province_code,
+               c.name as city_name,
+               c.code as city_code,
+               a.code as area_code,
+               a.name as area_name,
+               a.status as status
+        from provinces p join city c on p.code = c.province_code
+                         join area a on c.code = a.city_code
+        <where>
+            <if test="status!=4">
+                 a.status = #{status}
+            </if>
+        </where>
+    </select>
+</mapper>
