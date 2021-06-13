@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yzy.mapper.UserAreaMapper">
+    <select id="getUserAreaVO" resultType="com.yzy.entity.vo.UserAreaVO">
+        select p.name as province,
+               c.name as city,
+               a.name as area,
+               ua.time as timestamp_o
+        from user_area ua join area a on a.code = ua.area_code
+            join provinces p on p.code = a.province_code
+            join city c on c.code = a.city_code
+        where user_id = #{userId}
+    </select>
+
+</mapper>

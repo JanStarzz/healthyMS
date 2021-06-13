@@ -3,7 +3,9 @@ package com.yzy.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yzy.entity.Area;
 import com.yzy.entity.Result;
+import com.yzy.entity.vo.UserAreaVO;
 
+import java.sql.ResultSet;
 import java.util.Map;
 
 /**
@@ -24,4 +26,33 @@ public interface AreaService extends IService<Area> {
      * @return
      */
     Result setRiskArea(Map map);
+
+    /**
+     * 根据地区名称查询code
+     * @param city
+     * @param area
+     * @return
+     */
+    Integer areaUtil(String city,String area);
+
+    /**
+     * 获取地区的风险状况
+     * @param areaCode
+     * @return
+     */
+    Area getRiskStatusByAreaCode(Integer areaCode);
+
+    /**
+     * 保存定位信息
+     * @param userAreaVO
+     * @return
+     */
+    Result saveUserArea(UserAreaVO userAreaVO);
+
+    /**
+     * 根据userId查询经过的地方
+     * @param userId
+     * @return
+     */
+    Result getUserArea(String userId);
 }
